@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="58e1c4de-8f8f-4480-b158-c25b7ca79dcc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/WritePost/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/WritePost/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/_piece/DraftJS/DraftJS.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/_piece/DraftJS/DraftJS.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/_piece/DraftJS/ImageAdd.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/_piece/DraftJS/ImageAdd.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/uploadFiles.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/uploadFiles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Post/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Post/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/_piece/DraftJSViewer/DraftJSViewer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/_piece/DraftJSViewer/DraftJSViewer.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -30,7 +28,7 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="gitignore" value="1" />
-          <entry key="js" value="15" />
+          <entry key="js" value="20" />
           <entry key="json" value="1" />
           <entry key="md" value="1" />
         </counts>
@@ -38,7 +36,7 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JSON" value="1" />
-          <entry key="JavaScript" value="15" />
+          <entry key="JavaScript" value="20" />
           <entry key="Markdown" value="1" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
@@ -46,25 +44,37 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gitignore" value="6" />
-          <entry key="js" value="1749" />
-          <entry key="txt" value="74" />
+          <entry key="js" value="2120" />
+          <entry key="txt" value="119" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JavaScript" value="1749" />
-          <entry key="PLAIN_TEXT" value="80" />
+          <entry key="JavaScript" value="2120" />
+          <entry key="PLAIN_TEXT" value="125" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/WritePost/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="91" column="23" lean-forward="true" selection-start-line="91" selection-start-column="23" selection-end-line="91" selection-end-column="23" />
+            <state relative-caret-position="-295">
+              <caret line="36" column="17" lean-forward="true" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/Post/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="281">
+              <caret line="31" column="18" lean-forward="true" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -75,11 +85,23 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/_piece/DraftJS/DraftJS.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2409">
-              <caret line="62" column="6" selection-start-line="62" selection-start-column="6" selection-end-line="62" selection-end-column="6" />
+            <state relative-caret-position="893">
+              <caret line="131" column="40" lean-forward="true" selection-start-line="131" selection-start-column="40" selection-end-line="131" selection-end-column="40" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
                 <element signature="e#1092#1126#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/_piece/DraftJSViewer/DraftJSViewer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="34" column="6" selection-start-line="34" selection-start-column="6" selection-end-line="34" selection-end-column="6" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -133,6 +155,7 @@
       <find>image</find>
       <find>meteor</find>
       <find>uploadfile</find>
+      <find>rich</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -146,9 +169,11 @@
         <option value="$PROJECT_DIR$/src/components/_piece/DraftJS.js" />
         <option value="$PROJECT_DIR$/src/firebase.js" />
         <option value="$PROJECT_DIR$/src/helpers/uploadFiles.js" />
-        <option value="$PROJECT_DIR$/src/components/_piece/DraftJS/DraftJS.js" />
         <option value="$PROJECT_DIR$/src/components/_piece/DraftJS/ImageAdd.js" />
         <option value="$PROJECT_DIR$/src/components/WritePost/index.js" />
+        <option value="$PROJECT_DIR$/src/components/_piece/DraftJSViewer/DraftJSViewer.js" />
+        <option value="$PROJECT_DIR$/src/components/_piece/DraftJS/DraftJS.js" />
+        <option value="$PROJECT_DIR$/src/components/Post/index.js" />
       </list>
     </option>
   </component>
@@ -221,7 +246,22 @@
               <item name="react-boilerplate" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="_piece" type="462c0819:PsiDirectoryNode" />
+              <item name="DraftJSViewer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="react-boilerplate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="react-boilerplate" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="Blog" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="react-boilerplate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="react-boilerplate" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="EditPost" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="react-boilerplate" type="b2602c69:ProjectViewProjectNode" />
@@ -282,7 +322,7 @@
       <option name="presentableId" value="Default" />
       <updated>1540602331687</updated>
       <workItem from="1540602334391" duration="422000" />
-      <workItem from="1540704864621" duration="14233000" />
+      <workItem from="1540704864621" duration="18475000" />
     </task>
     <task id="LOCAL-00001" summary="Add Formik, WritePost fields validation">
       <created>1540709229202</created>
@@ -298,11 +338,18 @@
       <option name="project" value="LOCAL" />
       <updated>1540717287910</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Post data에 uploaded Image URL 정보 입력 기능 추가">
+      <created>1540737917402</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1540737917402</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14655000" />
+    <option name="totallyTimeSpent" value="18897000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
@@ -310,9 +357,9 @@
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info id="npm" order="1" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.18111347" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.18111347" />
       <window_info id="Structure" order="3" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="0" sideWeight="0.49753347" visible="true" weight="0.21372032" />
+      <window_info anchor="bottom" id="Terminal" order="0" sideWeight="0.49753347" visible="true" weight="0.21372032" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.5010571" side_tool="true" weight="0.20921545" />
       <window_info anchor="bottom" id="Version Control" order="2" sideWeight="0.5024665" side_tool="true" visible="true" weight="0.21372032" />
       <window_info anchor="bottom" id="Docker" order="3" show_stripe_button="false" />
@@ -337,7 +384,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add Formik, WritePost fields validation" />
     <MESSAGE value="Add uploadImage Feature" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add uploadImage Feature" />
+    <MESSAGE value="Post data에 uploaded Image URL 정보 입력 기능 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="Post data에 uploaded Image URL 정보 입력 기능 추가" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/node_modules/formik/dist/formik.esm.js">
@@ -384,16 +432,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Post/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/firebase.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -408,17 +446,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="104">
           <caret line="4" column="24" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/_piece/DraftJS/DraftJS.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2409">
-          <caret line="62" column="6" selection-start-line="62" selection-start-column="6" selection-end-line="62" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-            <element signature="e#1092#1126#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -443,10 +470,51 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-dom/cjs/react-dom.development.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="14104" selection-start-line="14104" selection-end-line="14104" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/EditPost/index.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/WritePost/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="91" column="23" lean-forward="true" selection-start-line="91" selection-start-column="23" selection-end-line="91" selection-end-column="23" />
+        <state relative-caret-position="-295">
+          <caret line="36" column="17" lean-forward="true" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/_piece/DraftJSViewer/DraftJSViewer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="34" column="6" selection-start-line="34" selection-start-column="6" selection-end-line="34" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/_piece/DraftJS/DraftJS.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="893">
+          <caret line="131" column="40" lean-forward="true" selection-start-line="131" selection-start-column="40" selection-end-line="131" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#1092#1126#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Post/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="31" column="18" lean-forward="true" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>

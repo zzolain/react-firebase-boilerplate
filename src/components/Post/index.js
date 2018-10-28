@@ -16,6 +16,7 @@ class Post extends Component {
   }
   componentDidMount() {
     database.ref(`posts/${this.props.match.params.id}`).once('value', (snapshot) => {
+      console.log('>>>>>>>>>>>', snapshot.val());
       const data = snapshot.val();
       const editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(data.content)));
       this.setState({
@@ -27,12 +28,13 @@ class Post extends Component {
       })
     })
   }
-  onChange = (editorState) => this.setState({
-    post: {
+  onChange = (editorStateName, editorState) => {
+    const post = {
       ...this.state.post,
       content: editorState,
-    },
-  });
+    };
+    this.setState({ post, })
+  };
   _deletePost = () => {
     database.ref(`posts/${this.props.match.params.id}`).remove()
       .then(database.ref(`posts-preview/${this.props.match.params.id}`).remove())
@@ -63,7 +65,6 @@ class Post extends Component {
   _setModeToEdit = () => this.setState({ editMode: true, });
   render() {
     const { ready, post, editMode } = this.state;
-    console.log('Post >>>>>', this.props);
     console.log('Post State>>>>>', this.state);
     return ready
     ? (
