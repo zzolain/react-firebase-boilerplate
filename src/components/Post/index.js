@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { database } from '../../firebase';
 import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
 import { convertToHTML } from 'draft-convert';
-import DraftJS from '../_piece/DraftJS';
-import DraftJSViewer from '../_piece/DraftJSViewer';
+import DraftJS from '../_piece/DraftJS/DraftJS';
+import DraftJSViewer from '../_piece/DraftJSViewer/DraftJSViewer';
 
 class Post extends Component {
   constructor(props) {

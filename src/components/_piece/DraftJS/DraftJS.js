@@ -25,8 +25,8 @@ import {
 } from 'draft-js-buttons';
 import mockUpload from './mockUpload';
 // import VideoAdd from './VideoAdd';
+import ImageAdd from './ImageAdd';
 import './draftjs.css';
-// import ImageAdd from './ImageAdd';
 
 const focusPlugin = createFocusPlugin();
 const resizeablePlugin = createResizeablePlugin();
@@ -129,7 +129,7 @@ class DraftJS extends Component {
 
   render() {
     console.log('DraftJS>>>>>>>', this.props);
-    const { editorState, onChange, placeholder, } = this.props;
+    const { editorState, placeholder, } = this.props;
     let className = 'RichEditor-editor';
     const contentState = editorState.getCurrentContent();
     if (!contentState.hasText()) {
@@ -155,11 +155,11 @@ class DraftJS extends Component {
           <AlignmentTool />
           <InlineToolbar />
         </div>
-        {/*<ImageAdd*/}
-          {/*modifier={imagePlugin.addImage}*/}
-          {/*onChange={this.onChange}*/}
-          {/*editorState={editorState}*/}
-        {/*/>*/}
+        <ImageAdd
+          modifier={imagePlugin.addImage}
+          onChange={this.onChange}
+          editorState={editorState}
+        />
         {/*<VideoAdd*/}
           {/*editorState={editorState}*/}
           {/*onChange={this.onChange}*/}

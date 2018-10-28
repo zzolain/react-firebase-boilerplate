@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { database } from '../../firebase';
 import { convertToRaw, EditorState } from 'draft-js';
 import { convertToHTML } from 'draft-convert';
-import { Formik, Form, Field } from 'formik';
-import DraftJS from '../_piece/DraftJS';
+import { Formik, Form } from 'formik';
+import DraftJS from '../_piece/DraftJS/DraftJS';
 
 class WritePost extends Component {
   constructor(props) {
@@ -70,7 +70,6 @@ class WritePost extends Component {
             setFieldValue,
             handleBlur,
             handleSubmit,
-            isSubmitting,
           }) => (
             <Form onSubmit={handleSubmit}>
               {console.log('>>>>>>>', values)}
