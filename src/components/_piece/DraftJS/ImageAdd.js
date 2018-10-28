@@ -2,7 +2,6 @@
 // https://github.com/draft-js-plugins/draft-js-plugins/blob/1da9943359a7e3dd9076daef2b4bea9de0e34eae/docs/client/components/pages/Image/AddImageEditor/ImageAdd/index.js
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { storage } from '../../../firebase';
 import { uploadImage } from '../../../helpers/uploadFiles';
 
 
@@ -52,25 +51,14 @@ class ImageAdd extends Component {
 
   uploadImageOnBrowser = () => {
     const {
-      editorState, onChange, modifier, addImageId,
+      editorState, onChange, modifier,
     } = this.props;
-    uploadImage(this.imageInputRef, true, (imageUploadError, imageFileIds) => {
+    uploadImage(this.imageInputRef, true, (imageUploadError, imageURLs) => {
       if (imageUploadError) {
         console.error(imageUploadError);
         return;
       }
-      console.table(imageFileIds);
-      // storage.call('provideImgSrc',
-      //   imageFileIds,
-      //   (error, imageFromServer) => {
-      //     if (error) {
-      //       console.error(error);
-      //       return;
-      //     }
-      //     onChange(modifier(editorState, imageFromServer[0], { id: imageFileIds[0], }));
-      //     addImageId(imageFileIds[0]);
-      //   }
-      // );
+      onChange(modifier(editorState, imageURLs[0]));
     });
   };
 

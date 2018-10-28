@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { database } from '../../firebase';
+import { serverValue, database } from '../../firebase';
 import { convertToRaw, EditorState } from 'draft-js';
 import { convertToHTML } from 'draft-convert';
 import { Formik, Form } from 'formik';
@@ -8,18 +8,14 @@ import DraftJS from '../_piece/DraftJS/DraftJS';
 class WritePost extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      title: '',
-      editorState: EditorState.createEmpty(),
-    }
   }
   onChange = editorState => this.setState({ editorState, });
-  onSubmit = () => {
-    const contentState = this.state.editorState.getCurrentContent();
+  onSubmit = (values) => {
+    const contentState = values.content.getCurrentContent();
     const common = {
-      createdAt: new Date(),
+      createdAt: serverValue.TIMESTAMP,
       author: 'TEST USER',
-      title: 'TEST TITLE',
+      title: values.title,
       likeCount: 0,
     };
     const rawState = JSON.stringify(convertToRaw(contentState));
@@ -60,7 +56,7 @@ class WritePost extends Component {
             }
             return errors;
           }}
-          onSubmit={values => console.table(values)}
+          onSubmit={this.onSubmit}
         >
           {({
             values,
@@ -88,16 +84,11 @@ class WritePost extends Component {
               />
               {errors.content && touched.content && errors.content}
               <button type="submit" disabled={errors.title || errors.content}>
-                Submit
+                작 성
               </button>
             </Form>
           )}
         </Formik>
-        <button
-          onClick={this.onSubmit}
-        >
-          작성
-        </button>
       </div>
     )
   };

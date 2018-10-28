@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import * as firebase from 'firebase';
-import { serverValue, storage } from '../firebase';
+import { storage } from '../firebase';
 
 export const uploadImage = (imageInputRef, temporary, callback) => {
   const fileRef = imageInputRef.current;
@@ -10,7 +10,6 @@ export const uploadImage = (imageInputRef, temporary, callback) => {
       if (index === 10) {
         return false;
       }
-      console.log(file);
       waitingImageUpload.push(new Promise((res, rej) => {
         if (file) {
           const meta = {
@@ -37,18 +36,20 @@ export const uploadImage = (imageInputRef, temporary, callback) => {
             }
           }, (error) => {
             console.log('upload Error', error)// Handle unsuccessful uploads
+            rej(error);
           }, () => {
             // Handle successful uploads on complete
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
             uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              res(downloadURL);
               console.log('File available at', downloadURL);
             });
           })
         }
       }));
     });
-    Promise.all(waitingImageUpload).then((fileIds) => {
-      callback(null, fileIds);
+    Promise.all(waitingImageUpload).then((downloadURLs) => {
+      callback(null, downloadURLs);
     }, (error) => {
       callback(new Error(`Error at file uploading, ${error}`));
     });

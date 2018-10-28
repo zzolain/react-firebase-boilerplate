@@ -128,7 +128,6 @@ class DraftJS extends Component {
   };
 
   render() {
-    console.log('DraftJS>>>>>>>', this.props);
     const { editorState, placeholder, } = this.props;
     let className = 'RichEditor-editor';
     const contentState = editorState.getCurrentContent();
