@@ -1,37 +1,30 @@
 import React, { Component } from 'react';
 import { serverValue, database } from '../../firebase';
 import { convertToRaw, EditorState } from 'draft-js';
-import { convertToHTML } from 'draft-convert';
 import { Formik, Form } from 'formik';
 import DraftJS from '../_piece/DraftJS/DraftJS';
 
 class WritePost extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      imageFiles: [],
+    }
   }
-  onChange = editorState => this.setState({ editorState, });
+  _addImageFile = (imageFile) => this.setState({ imageFiles: this.state.imageFiles.concat(imageFile), });
   onSubmit = (values) => {
     const contentState = values.content.getCurrentContent();
-    const common = {
+    const post = {
       createdAt: serverValue.TIMESTAMP,
       author: 'TEST USER',
       title: values.title,
       likeCount: 0,
-    };
-    const rawState = JSON.stringify(convertToRaw(contentState));
-    const contentHTML = convertToHTML(contentState);
-    const postData = {
-       ...common,
-       content: rawState,
-    };
-    const postPreview = {
-      ...common,
-      content: contentHTML,
+      imageFiles: this.state.imageFiles,
+      content: JSON.stringify(convertToRaw(contentState))
     };
     const newPostKey = database.ref().child('posts').push().key;
     const updates = {};
-    updates['/posts/' + newPostKey] = postData;
-    updates['/posts-preview/' + newPostKey] = postPreview;
+    updates['/posts/' + newPostKey] = post;
     database.ref().update(updates, (error) => {
       if (error) {
         return console.log('Error on WritePost', error);
@@ -81,6 +74,7 @@ class WritePost extends Component {
                 editorStateName="content"
                 onChange={setFieldValue}
                 placeholder="글을 입력해 보세요."
+                _addImageFile={this._addImageFile}
               />
               {errors.content && touched.content && errors.content}
               <button type="submit" disabled={errors.title || errors.content}>

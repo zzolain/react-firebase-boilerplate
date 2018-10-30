@@ -7,7 +7,7 @@ export const uploadImage = (imageInputRef, temporary, callback) => {
   const waitingImageUpload = [];
   if (fileRef.files) {
     _.forEach(fileRef.files, (file, index) => {
-      if (index === 10) {
+      if (index === 1) {
         return false;
       }
       waitingImageUpload.push(new Promise((res, rej) => {
@@ -33,6 +33,8 @@ export const uploadImage = (imageInputRef, temporary, callback) => {
               case firebase.storage.TaskState.RUNNING: // or 'running'
                 console.log('Upload is running');
                 break;
+              default :
+                break;
             }
           }, (error) => {
             console.log('upload Error', error)// Handle unsuccessful uploads
@@ -40,16 +42,18 @@ export const uploadImage = (imageInputRef, temporary, callback) => {
           }, () => {
             // Handle successful uploads on complete
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-              res(downloadURL);
-              console.log('File available at', downloadURL);
+            const snapshotRef = uploadTask.snapshot.ref;
+            const path = snapshotRef.fullPath;
+            snapshotRef.getDownloadURL().then((url) => {
+            res({ url, path, });
+            console.log('File available at', url, path);
             });
           })
         }
       }));
     });
-    Promise.all(waitingImageUpload).then((downloadURLs) => {
-      callback(null, downloadURLs);
+    Promise.all(waitingImageUpload).then((images) => {
+      callback(null, images);
     }, (error) => {
       callback(new Error(`Error at file uploading, ${error}`));
     });

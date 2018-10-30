@@ -158,6 +158,7 @@ class DraftJS extends Component {
           modifier={imagePlugin.addImage}
           onChange={this.onChange}
           editorState={editorState}
+          _addImageFile={this.props._addImageFile}
         />
         {/*<VideoAdd*/}
           {/*editorState={editorState}*/}

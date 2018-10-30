@@ -51,14 +51,15 @@ class ImageAdd extends Component {
 
   uploadImageOnBrowser = () => {
     const {
-      editorState, onChange, modifier,
+      editorState, onChange, modifier, _addImageFile
     } = this.props;
-    uploadImage(this.imageInputRef, true, (imageUploadError, imageURLs) => {
+    uploadImage(this.imageInputRef, true, (imageUploadError, images) => {
       if (imageUploadError) {
         console.error(imageUploadError);
         return;
       }
-      onChange(modifier(editorState, imageURLs[0]));
+      onChange(modifier(editorState, images[0].url));
+      _addImageFile(images[0]);
     });
   };
 

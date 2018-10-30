@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { database } from '../../firebase';
+import { database, storage } from '../../firebase';
 import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
-import { convertToHTML } from 'draft-convert';
 import DraftJS from '../_piece/DraftJS/DraftJS';
 import DraftJSViewer from '../_piece/DraftJSViewer/DraftJSViewer';
 
@@ -11,12 +10,10 @@ class Post extends Component {
     this.state = {
       ready: false,
       post: {},
-      editMode: false
     }
   }
   componentDidMount() {
     database.ref(`posts/${this.props.match.params.id}`).once('value', (snapshot) => {
-      console.log('>>>>>>>>>>>', snapshot.val());
       const data = snapshot.val();
       const editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(data.content)));
       this.setState({
@@ -28,6 +25,15 @@ class Post extends Component {
       })
     })
   }
+  _addImageFile = (imageFile) => {
+    const { post } = this.state;
+    this.setState({
+      post: {
+        ...post,
+        imageFiles: post.imageFiles ? post.imageFiles.concat(imageFile) : [ imageFile, ],
+      },
+    });
+  };
   onChange = (editorStateName, editorState) => {
     const post = {
       ...this.state.post,
@@ -36,25 +42,20 @@ class Post extends Component {
     this.setState({ post, })
   };
   _deletePost = () => {
+    const { imageFiles, } = this.state.post;
     database.ref(`posts/${this.props.match.params.id}`).remove()
-      .then(database.ref(`posts-preview/${this.props.match.params.id}`).remove())
+      .then(imageFiles && imageFiles.map(image => storage.ref(`${image.path}`).delete()))
       .then(this.props.history.push('/blog/'));
   };
   _updatePost = () => {
     const contentState = this.state.post.content.getCurrentContent();
     const rawState = JSON.stringify(convertToRaw(contentState));
-    const contentHTML = convertToHTML(contentState);
-    const postData = {
+    const post = {
       ...this.state.post,
       content: rawState,
     };
-    const postPreview = {
-      ...this.state.post,
-      content: contentHTML,
-    };
     const updates = {};
-    updates[`posts/${this.props.match.params.id}`] = postData;
-    updates[`posts-preview/${this.props.match.params.id}`] = postPreview;
+    updates[`posts/${this.props.match.params.id}`] = post;
     database.ref().update(updates, (error) => {
       if (error) {
         return console.log('Error on Post._updatePost()', error);
@@ -76,7 +77,7 @@ class Post extends Component {
         {editMode
           ? (
             <>
-              <DraftJS editorState={post.content} onChange={this.onChange} />
+              <DraftJS editorState={post.content} onChange={this.onChange} _addImageFile={this._addImageFile}/>
               <button onClick={this._updatePost}>저 장</button>
             </>
           )

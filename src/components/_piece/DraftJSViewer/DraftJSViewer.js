@@ -55,4 +55,8 @@ class DraftJSViewer extends Component {
   }
 }
 
+DraftJSViewer.propTypes = {
+  editorState: PropTypes.object.isRequired,
+};
+
 export default DraftJSViewer;
