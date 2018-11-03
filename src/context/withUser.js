@@ -16,7 +16,9 @@ class UserProvider extends Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // User is signed in.
-        this.setState({currentUser: user})
+        firebase.database().ref(`users/${user.uid}`).once('value', (snapshot) => {
+          this.setState({ currentUser: snapshot.val()})
+        });
       } else {
         // No user is signed in.
         this.setState({currentUser: {}})

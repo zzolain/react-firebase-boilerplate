@@ -10,18 +10,23 @@ class Post extends Component {
     this.state = {
       ready: false,
       post: {},
+      author: {},
     }
   }
   componentDidMount() {
     firebase.database().ref(`posts/${this.props.match.params.id}`).once('value', (snapshot) => {
-      const data = snapshot.val();
-      const editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(data.content)));
-      this.setState({
-        post: {
-          ...data,
-          content: editorState,
-        },
-        ready: true,
+      const post = snapshot.val();
+      const editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(post.content)));
+      firebase.database().ref(`users/${post.author}`).once('value', (snapshot) => {
+        const author = snapshot.val();
+        this.setState({
+          post: {
+            ...post,
+            content: editorState,
+          },
+          author,
+          ready: true,
+        })
       })
     })
   }
@@ -65,7 +70,7 @@ class Post extends Component {
   };
   _setModeToEdit = () => this.setState({ editMode: true, });
   render() {
-    const { ready, post, editMode } = this.state;
+    const { ready, post, editMode, author } = this.state;
     console.log('Post State>>>>>', this.state);
     return ready
     ? (
@@ -73,6 +78,9 @@ class Post extends Component {
         <div>
           <button onClick={this._setModeToEdit}>수 정</button>
           <button onClick={this._deletePost}>삭 제</button>
+        </div>
+        <div>
+          작성자 >>>>>> {author.name}
         </div>
         {editMode
           ? (
@@ -85,7 +93,7 @@ class Post extends Component {
         }
       </div>
       )
-    : '';
+    : 'LOADING...';
   }
 }
 

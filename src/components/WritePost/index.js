@@ -3,6 +3,7 @@ import firebase from 'firebase/app';
 import { convertToRaw, EditorState } from 'draft-js';
 import { Formik, Form } from 'formik';
 import DraftJS from '../_piece/DraftJS/DraftJS';
+import { withUser } from '../../context/withUser';
 
 class WritePost extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class WritePost extends Component {
     const contentState = values.content.getCurrentContent();
     const post = {
       createdAt: firebase.database.ServerValue.TIMESTAMP,
-      author: 'TEST USER',
+      author: this.props.userState.currentUser.uid,
       title: values.title,
       likeCount: 0,
       imageFiles: this.state.imageFiles,
@@ -33,6 +34,7 @@ class WritePost extends Component {
     });
   };
   render() {
+    console.log('WritePost >>>>', this.props);
     return (
       <div>
         <Formik
@@ -88,4 +90,4 @@ class WritePost extends Component {
   };
 }
 
-export default WritePost;
+export default withUser(WritePost);
