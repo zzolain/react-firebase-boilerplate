@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { uploadImage } from '../../../helpers/uploadFiles';
+import './imageAdd.css';
 
 
 class ImageAdd extends Component {
@@ -64,26 +65,27 @@ class ImageAdd extends Component {
   };
 
   render() {
-    // const popoverClassName = this.state.open ?
-    //   styles.addImagePopover :
-    //   styles.addImageClosedPopover;
-    // const buttonClassName = this.state.open ?
-    //   styles.addImagePressedButton :
-    //   styles.addImageButton;
+    const popoverClassName = this.state.open ?
+      'addImagePopover' :
+      'addImageClosedPopover';
+    const buttonClassName = this.state.open ?
+      'addImagePressedButton' :
+      'addImageButton';
 
     return (
-      <div className={"styles.addImage"}>
+      <div className="addImage">
         <button
-          className={"buttonClassName"}
+          className={buttonClassName}
           onMouseUp={this.openPopover}
           type="button"
         >
-          <svg className={"styles.icon_image"}>
-            <use xlinkHref="/icon/image.svg#icon-image" />
-          </svg>
+          Add Image
+          {/*<svg className="icon_image">*/}
+            {/*<use xlinkHref="/icon/image.svg#icon-image" />*/}
+          {/*</svg>*/}
         </button>
         <div
-          className={"popoverClassName"}
+          className={popoverClassName}
           onClick={this.onPopoverClick}
           onKeyPress={this.onPopoverClick}
         >

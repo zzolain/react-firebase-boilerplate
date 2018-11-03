@@ -63,14 +63,14 @@ class WritePost extends Component {
             handleSubmit,
           }) => (
             <Form onSubmit={handleSubmit}>
-              {console.log('>>>>>>>', values)}
+              <p>제목</p>
               <input
                 type="text"
                 name="title"
                 onChange={handleChange}
                 value={values.title}
               />
-              {errors.title && touched.title && errors.title}
+              {errors.title}
               <DraftJS
                 editorState={values.content}
                 editorStateName="content"
@@ -78,7 +78,7 @@ class WritePost extends Component {
                 placeholder="글을 입력해 보세요."
                 _addImageFile={this._addImageFile}
               />
-              {errors.content && touched.content && errors.content}
+              {errors.content}
               <button type="submit" disabled={errors.title || errors.content}>
                 작 성
               </button>

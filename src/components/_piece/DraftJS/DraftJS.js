@@ -24,7 +24,7 @@ import {
   CodeBlockButton
 } from 'draft-js-buttons';
 import mockUpload from './mockUpload';
-// import VideoAdd from './VideoAdd';
+import VideoAdd from './VideoAdd';
 import ImageAdd from './ImageAdd';
 import './draftjs.css';
 
@@ -160,11 +160,11 @@ class DraftJS extends Component {
           editorState={editorState}
           _addImageFile={this.props._addImageFile}
         />
-        {/*<VideoAdd*/}
-          {/*editorState={editorState}*/}
-          {/*onChange={this.onChange}*/}
-          {/*modifier={videoPlugin.addVideo}*/}
-        {/*/>*/}
+        <VideoAdd
+          editorState={editorState}
+          onChange={this.onChange}
+          modifier={videoPlugin.addVideo}
+        />
       </div>
     )
   }
