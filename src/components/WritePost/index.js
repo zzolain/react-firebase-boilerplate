@@ -15,7 +15,9 @@ class WritePost extends Component {
   _addImageFile = (imageFile) => this.setState({ imageFiles: this.state.imageFiles.concat(imageFile), });
   onSubmit = (values) => {
     const contentState = values.content.getCurrentContent();
+    const newPostKey = firebase.database().ref().child('posts').push().key;
     const post = {
+      _id: newPostKey,
       createdAt: firebase.database.ServerValue.TIMESTAMP,
       author: this.props.userState.currentUser.uid,
       title: values.title,
@@ -23,7 +25,6 @@ class WritePost extends Component {
       imageFiles: this.state.imageFiles,
       content: JSON.stringify(convertToRaw(contentState))
     };
-    const newPostKey = firebase.database().ref().child('posts').push().key;
     const updates = {};
     updates['/posts/' + newPostKey] = post;
     firebase.database().ref().update(updates, (error) => {

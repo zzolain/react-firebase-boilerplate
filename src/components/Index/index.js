@@ -1,8 +1,12 @@
 import React from 'react';
+import SideMenu from '../_piece/SideMenu';
 
 const Index = props => {
   return (
-    <div>INDEX</div>
+    <div>
+      INDEX
+      <SideMenu/>
+    </div>
   )
 };
 

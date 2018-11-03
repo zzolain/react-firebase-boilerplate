@@ -4,47 +4,54 @@ import { Link } from 'react-router-dom';
 import { convertToHTML } from 'draft-convert';
 import { convertFromRaw } from 'draft-js';
 import { withUser } from '../../context/withUser';
+import PermissionChecker from "../../helpers/permission";
 
 class Blog extends Component {
   constructor(props) {
     super(props);
     this.state = {
       posts: [],
-      ready: false,
+      isAuthorReady: false,
+      isPostReady: false,
     }
   }
   componentDidMount() {
+    firebase.database().ref('users').once('value', (snapshot) => {
+      this.setState({
+        authors: snapshot.val(),
+        isAuthorReady: true,
+      })
+    });
     firebase.database().ref('posts').on('value', (snapshot) => {
       const data = snapshot.val();
-      const posts = [];
-      for (let postId in data) {
-        posts.push({
-          ...data[postId],
-          _id: postId,
-        })
-      }
+      const posts = data ? Object.values(snapshot.val()) : [];
       this.setState({
         posts,
-        ready: true,
+        isPostReady: true,
       })
-    })
+    });
   }
   componentWillUnmount() {
     firebase.database().ref('posts').off('value');
   }
   render() {
-    const { ready, posts } = this.state;
+    console.log('blog>>>>', this.state);
+    const { authors, posts, isAuthorReady, isPostReady } = this.state;
+    const ready = isAuthorReady && isPostReady;
     return ready
     ? (
         <div>
-          {console.log(this.props.userState)}
+          <PermissionChecker>
+            <Link to="/blog/write"><button>글쓰기</button></Link>
+          </PermissionChecker>
           <ul>
           {posts.map(post => (
             <li key={post._id}>
+              <span>Title: {post.title}</span>
               <Link to={`/blog/post/${post._id}`}>
-                <p>{post._id}</p>
                 <p dangerouslySetInnerHTML={{__html: convertToHTML(convertFromRaw(JSON.parse(post.content)))}} />
               </Link>
+              <p>{authors[post.author].name}</p>
             </li>
           ))}
           </ul>

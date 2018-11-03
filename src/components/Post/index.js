@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase/app';
+import { Link } from 'react-router-dom';
 import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
 import DraftJS from '../_piece/DraftJS/DraftJS';
 import DraftJSViewer from '../_piece/DraftJSViewer/DraftJSViewer';
@@ -75,6 +76,7 @@ class Post extends Component {
     return ready
     ? (
       <div>
+        <Link to="/blog"><button>목록보기</button></Link>
         <div>
           <button onClick={this._setModeToEdit}>수 정</button>
           <button onClick={this._deletePost}>삭 제</button>
