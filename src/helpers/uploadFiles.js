@@ -1,6 +1,5 @@
 import _ from 'lodash';
-import * as firebase from 'firebase';
-import { storage } from '../firebase';
+import firebase from 'firebase/app';
 
 export const uploadImage = (imageInputRef, temporary, callback) => {
   const fileRef = imageInputRef.current;
@@ -18,7 +17,7 @@ export const uploadImage = (imageInputRef, temporary, callback) => {
           if (typeof temporary === 'boolean') {
             meta.temporary = temporary;
           }
-          const storageRef = storage.ref();
+          const storageRef = firebase.storage().ref();
           const imageFileRef = storageRef.child(`images/${file.name}`);
           const uploadTask = imageFileRef.put(file, meta);
           uploadTask.on('state_changed', snapshot => {

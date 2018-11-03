@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { database, storage } from '../../firebase';
+import firebase from 'firebase/app';
 import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
 import DraftJS from '../_piece/DraftJS/DraftJS';
 import DraftJSViewer from '../_piece/DraftJSViewer/DraftJSViewer';
@@ -13,7 +13,7 @@ class Post extends Component {
     }
   }
   componentDidMount() {
-    database.ref(`posts/${this.props.match.params.id}`).once('value', (snapshot) => {
+    firebase.database().ref(`posts/${this.props.match.params.id}`).once('value', (snapshot) => {
       const data = snapshot.val();
       const editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(data.content)));
       this.setState({
@@ -43,8 +43,8 @@ class Post extends Component {
   };
   _deletePost = () => {
     const { imageFiles, } = this.state.post;
-    database.ref(`posts/${this.props.match.params.id}`).remove()
-      .then(imageFiles && imageFiles.map(image => storage.ref(`${image.path}`).delete()))
+    firebase.database().ref(`posts/${this.props.match.params.id}`).remove()
+      .then(imageFiles && imageFiles.map(image => firebase.storage().ref(`${image.path}`).delete()))
       .then(this.props.history.push('/blog/'));
   };
   _updatePost = () => {
@@ -56,7 +56,7 @@ class Post extends Component {
     };
     const updates = {};
     updates[`posts/${this.props.match.params.id}`] = post;
-    database.ref().update(updates, (error) => {
+    firebase.database().ref().update(updates, (error) => {
       if (error) {
         return console.log('Error on Post._updatePost()', error);
       }

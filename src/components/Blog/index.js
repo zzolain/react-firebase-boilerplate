@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { database } from '../../firebase';
+import firebase from 'firebase/app';
 import { Link } from 'react-router-dom';
 import { convertToHTML } from 'draft-convert';
 import { convertFromRaw } from 'draft-js';
+import { withUser } from '../../context/withUser';
 
 class Blog extends Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class Blog extends Component {
     }
   }
   componentDidMount() {
-    database.ref('posts').on('value', (snapshot) => {
+    firebase.database().ref('posts').on('value', (snapshot) => {
       const data = snapshot.val();
       const posts = [];
       for (let postId in data) {
@@ -29,14 +30,14 @@ class Blog extends Component {
     })
   }
   componentWillUnmount() {
-    database.ref('posts').off('value');
+    firebase.database().ref('posts').off('value');
   }
   render() {
     const { ready, posts } = this.state;
-    console.log('Blog >>>>>>', this.state);
     return ready
     ? (
         <div>
+          {console.log(this.props.userState)}
           <ul>
           {posts.map(post => (
             <li key={post._id}>
@@ -53,4 +54,4 @@ class Blog extends Component {
   }
 }
 
-export default Blog;
+export default withUser(Blog);

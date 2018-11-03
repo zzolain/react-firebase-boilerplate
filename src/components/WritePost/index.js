@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { serverValue, database } from '../../firebase';
+import firebase from 'firebase/app';
 import { convertToRaw, EditorState } from 'draft-js';
 import { Formik, Form } from 'formik';
 import DraftJS from '../_piece/DraftJS/DraftJS';
@@ -15,17 +15,17 @@ class WritePost extends Component {
   onSubmit = (values) => {
     const contentState = values.content.getCurrentContent();
     const post = {
-      createdAt: serverValue.TIMESTAMP,
+      createdAt: firebase.database.ServerValue.TIMESTAMP,
       author: 'TEST USER',
       title: values.title,
       likeCount: 0,
       imageFiles: this.state.imageFiles,
       content: JSON.stringify(convertToRaw(contentState))
     };
-    const newPostKey = database.ref().child('posts').push().key;
+    const newPostKey = firebase.database().ref().child('posts').push().key;
     const updates = {};
     updates['/posts/' + newPostKey] = post;
-    database.ref().update(updates, (error) => {
+    firebase.database().ref().update(updates, (error) => {
       if (error) {
         return console.log('Error on WritePost', error);
       }
