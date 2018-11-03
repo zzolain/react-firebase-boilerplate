@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from "react-router-dom";
 import Index from './components/Index';
+import About from './components/About';
 import Blog from './components/Blog';
 import Post from './components/Post';
 import WritePost from './components/WritePost';
@@ -20,6 +21,7 @@ class App extends Component {
       <UserProvider>
         <div className="App">
           <Route exact path="/" component={Index} />
+          <Route exact path="/about" component={About} />
           <Route exact path="/blog" component={Blog} />
           <Route exact path="/blog/write" component={WritePost} />
           <Route exact path="/blog/post/:id" component={Post} />
