@@ -8,7 +8,8 @@ class About extends Component {
       isReady: false,
     };
     firebase.database().ref('users').once('value', (snapshot) => {
-      this.setState({ users: Object.values(snapshot.val()), isReady: true, });
+      const users = snapshot.val();
+      this.setState({ users: users ? Object.values(users) : [], isReady: true, });
     })
   }
   render() {

@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import firebase from 'firebase/app';
+import { hashCode } from './hashCode';
 
 export const uploadImage = (imageInputRef, temporary, callback) => {
   const fileRef = imageInputRef.current;
@@ -12,13 +13,14 @@ export const uploadImage = (imageInputRef, temporary, callback) => {
       waitingImageUpload.push(new Promise((res, rej) => {
         if (file) {
           const meta = {
-            userId: 'TEST USER', // Optional, used to check on server for file tampering
+            // Optional, used to check on server for file tampering
           };
           if (typeof temporary === 'boolean') {
             meta.temporary = temporary;
           }
+          const fileName = hashCode(file.name);
           const storageRef = firebase.storage().ref();
-          const imageFileRef = storageRef.child(`images/${file.name}`);
+          const imageFileRef = storageRef.child(`images/${fileName}`);
           const uploadTask = imageFileRef.put(file, meta);
           uploadTask.on('state_changed', snapshot => {
             // Observe state change events such as progress, pause, and resume

@@ -147,6 +147,7 @@ class DraftJS extends Component {
             editorState={editorState}
             handleKeyCommand={this.handleKeyCommand}
             onChange={this.onChange}
+            onBlur={this.props.onBlur ? () => this.props.onBlur() : null}
             onTab={this.onTab}
             ref={this.editor}
             spellCheck

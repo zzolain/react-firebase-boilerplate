@@ -1,5 +1,5 @@
 import React, { Component, createContext } from 'react';
-import firebase from 'firebase/app';
+import * as firebase from 'firebase';
 
 const Context = createContext();  // context를 생성
 
@@ -10,18 +10,27 @@ class UserProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {}
+      currentUser: {},
+      isReady: false,
     };
     // Get a reference to the storage service, which is used to create references in your storage bucket
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // User is signed in.
+        console.log('Signed In.');
         firebase.database().ref(`users/${user.uid}`).once('value', (snapshot) => {
-          this.setState({ currentUser: snapshot.val()})
+          this.setState({
+            isReady: true,
+            currentUser: snapshot.val(),
+          })
         });
       } else {
         // No user is signed in.
-        this.setState({currentUser: {}})
+        console.log('Signed Out.');
+        this.setState({
+          isReady: true,
+          currentUser: {},
+        })
       }
     });
   }

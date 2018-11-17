@@ -1,94 +1,91 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import firebase from 'firebase/app';
-import { convertToRaw, EditorState } from 'draft-js';
-import { Formik, Form } from 'formik';
-import DraftJS from '../_piece/DraftJS/DraftJS';
+import { convertToRaw } from 'draft-js';
 import { withUser } from '../../context/withUser';
+import PostForm from "../_piece/PostForm";
+import {hashCode} from "../../helpers/hashCode";
 
 class WritePost extends Component {
   constructor(props) {
     super(props);
     this.state = {
       imageFiles: [],
-    }
-  }
-  _addImageFile = (imageFile) => this.setState({ imageFiles: this.state.imageFiles.concat(imageFile), });
-  onSubmit = (values) => {
-    const contentState = values.content.getCurrentContent();
-    const newPostKey = firebase.database().ref().child('posts').push().key;
-    const post = {
-      _id: newPostKey,
-      createdAt: firebase.database.ServerValue.TIMESTAMP,
-      author: this.props.userState.currentUser.uid,
-      title: values.title,
-      likeCount: 0,
-      imageFiles: this.state.imageFiles,
-      content: JSON.stringify(convertToRaw(contentState))
+      thumbnailSrc: '',
     };
-    const updates = {};
-    updates['/posts/' + newPostKey] = post;
-    firebase.database().ref().update(updates, (error) => {
-      if (error) {
-        return console.log('Error on WritePost', error);
+  }
+
+  onSubmit = (values) => {
+    const newPostKey = firebase.database().ref().child('posts').push().key;
+    // image Upload
+    const meta = {
+      // Optional, used to check on server for file tampering
+    };
+    const file = values.thumbnail;
+    const fileName = hashCode(file.name);
+    const storageRef = firebase.storage().ref();
+    const thumbnailFileRef = storageRef.child(`images/${fileName}`);
+    const uploadTask = thumbnailFileRef.put(file, meta);
+    uploadTask.on('state_changed', snapshot => {
+      // Observe state change events such as progress, pause, and resume
+      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log('Upload is ' + progress + '% done');
+      switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED: // or 'paused'
+          console.log('Upload is paused');
+          break;
+        case firebase.storage.TaskState.RUNNING: // or 'running'
+          console.log('Upload is running');
+          break;
+        default :
+          break;
       }
-      return this.props.history.push(`/blog/post/${newPostKey}`);
+    }, (error) => {
+      firebase.database().ref().child(`posts/${newPostKey}`).delete();
+      console.log('upload Error', error)// Handle unsuccessful uploads
+    }, () => {
+      // Handle successful uploads on complete
+      // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+      const snapshotRef = uploadTask.snapshot.ref;
+      const path = snapshotRef.fullPath;
+      snapshotRef.getDownloadURL().then((url) => {
+        console.log('File available at', url, path);
+        // Create Post
+        const contentState = values.content.getCurrentContent();
+        const post = {
+          _id: newPostKey,
+          createdAt: firebase.database.ServerValue.TIMESTAMP,
+          author: this.props.userState.currentUser.uid,
+          title: values.title,
+          theme: values.theme,
+          likeCount: 0,
+          imageFiles: values.imageFiles.concat([{url, path}]),
+          thumbnail: { url, path, },
+          content: JSON.stringify(convertToRaw(contentState))
+        };
+        const updates = {};
+        updates['/posts/' + newPostKey] = post;
+        firebase.database().ref().update(updates, (error) => {
+          if (error) {
+            return console.log('Error on WritePost', error);
+          }
+          return this.props.history.push(`/blog/post/${newPostKey}`);
+        });
+      });
     });
   };
   render() {
-    console.log('WritePost >>>>', this.props);
+    console.log('WritePost >>>>', this.state);
     return (
       <div>
-        <Formik
-          initialValues={{
-            title: '',
-            content: EditorState.createEmpty(),
-          }}
-          validate={values => {
-            let errors = {};
-            if (!values.title) {
-              errors.title = '제목을 입력해 주세요.';
-            } else if (!values.content.getCurrentContent().hasText()) {
-              errors.content = '내용을 입력해 주세요.'
-            }
-            return errors;
-          }}
-          onSubmit={this.onSubmit}
-        >
-          {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            setFieldValue,
-            handleBlur,
-            handleSubmit,
-          }) => (
-            <Form onSubmit={handleSubmit}>
-              <p>제목</p>
-              <input
-                type="text"
-                name="title"
-                onChange={handleChange}
-                value={values.title}
-              />
-              {errors.title}
-              <DraftJS
-                editorState={values.content}
-                editorStateName="content"
-                onChange={setFieldValue}
-                placeholder="글을 입력해 보세요."
-                _addImageFile={this._addImageFile}
-              />
-              {errors.content}
-              <button type="submit" disabled={errors.title || errors.content}>
-                작 성
-              </button>
-            </Form>
-          )}
-        </Formik>
+        WritePost
+        <PostForm onSubmit={this.onSubmit}/>
       </div>
     )
   };
 }
+
+
 
 export default withUser(WritePost);

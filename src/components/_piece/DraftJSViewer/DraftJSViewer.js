@@ -37,7 +37,7 @@ class DraftJSViewer extends Component {
     super(props);
     this.editor = React.createRef();
   }
-  onChange = () => console.log('DraftJSViewer.onChange()');
+  onChange = () => null;
   render() {
     // console.log('DraftJSViewer>>>>>>', this.props);
     return (
